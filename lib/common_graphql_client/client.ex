@@ -18,7 +18,7 @@ defmodule CommonGraphQLClient.Client do
       @behaviour CommonGraphQLClient.ClientBehaviour
 
       @config fn ->
-        unquote(otp_app) |> Application.get_env(unquote(mod), [])
+        unquote(otp_app) |> Application.compile_env(unquote(mod), [])
       end
       @config_with_key fn key -> @config.() |> Keyword.get(key) end
 
@@ -230,7 +230,7 @@ defmodule CommonGraphQLClient.Client do
       defp log_errors(nil), do: :ok
 
       defp log_errors(errors),
-        do: Logger.warn("Errors in reply: #{inspect(errors)}")
+        do: Logger.warning("Errors in reply: #{inspect(errors)}")
 
       def connection(opts) do
         raise("No connection specified for opts: #{inspect(opts)}")
